@@ -1,5 +1,8 @@
 lib.locale()
-
+local Job = nil
+if Config.Core == 'Qbox' then
+    local QBCore = exports['qbx-core']:GetCoreObject()
+end
 --IF YOU DONT KNOW WHAT ARE YOU DOING JUST DONT TOUCH ANYTHING :)
 
 function LockpickVehicle(entity)
@@ -55,7 +58,7 @@ local function SetTarget()
     local TargetOptions = {
         {
             name = 'lss-lockpick',
-            icon = 'fa-solid fa-download',
+            icon = 'fa-solid '..Config.SettingsLockpick.Icon,
             items = Config.SettingsLockpick.Item,
             onSelect = function (data)
 
@@ -73,7 +76,11 @@ local function SetTarget()
             end,
             label = locale('target_lockpick'),
             canInteract = function(entity)
-                local Job = ESX.PlayerData.job.name
+                if Config.Core == 'ESX' then
+                    Job = ESX.PlayerData.job.name
+                else
+                    Job = QBCore.Functions.GetPlayerData().job.name
+                end
                 for k,v in pairs(Config.BlacklistedJobs) do
                     if Job == v then
                         
