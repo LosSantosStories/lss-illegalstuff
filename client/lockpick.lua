@@ -1,7 +1,7 @@
 lib.locale()
 local Job = nil
 if Config.Core == 'Qbox' then
-    local QBCore = exports['qbx-core']:GetCoreObject()
+    local Qbox = exports['qbx-core']:GetCoreObject()
 end
 --IF YOU DONT KNOW WHAT ARE YOU DOING JUST DONT TOUCH ANYTHING :)
 
@@ -79,7 +79,7 @@ local function SetTarget()
                 if Config.Core == 'ESX' then
                     Job = ESX.PlayerData.job.name
                 else
-                    Job = QBCore.Functions.GetPlayerData().job.name
+                    Job = Qbox.Functions.GetPlayerData().job.name
                 end
                 for k,v in pairs(Config.BlacklistedJobs) do
                     if Job == v then

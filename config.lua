@@ -1,6 +1,6 @@
 Config = {}
 
-Config.Core = 'ESX'
+Config.Core = 'ESX' --ESX OR QBox
 
 Config.SettingsLockpick =  {
     Item = 'lockpick', --Item name
