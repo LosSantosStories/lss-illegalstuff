@@ -1,0 +1,8 @@
+{
+    "notification_title": "Illegális Rendszer",
+    "target_lockpick": "Feltörés",
+
+    "lockpicking": "Feltörés folyamatban",
+    "unlocked_door": "Sikeresen feltörted az autót",
+    "progress_cancel": "Folyamat megszakítva"
+}

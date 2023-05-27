@@ -1,0 +1,8 @@
+{
+    "notification_title": "Illegal System",
+    "target_lockpick": "Lockpick",
+
+    "lockpicking": "Lockpick in progress",
+    "unlocked_door": "Succesfully unlocked the doors",
+    "progress_cancel": "Progress canceled"
+}
