@@ -36,7 +36,7 @@ function LockpickVehicle(entity)
         for i = -1, Seats do
             if not IsVehicleSeatFree(entity, i) then
                 local NPC = GetPedInVehicleSeat(entity, i)
-                TaskLeaveVehicle(NPC, entity, 320)
+                TaskLeaveVehicle(NPC, entity, 0)
                 Wait(1500)
                 TaskSmartFleePed(NPC, cache.ped, 1000.0, -1, false, false)
             end
