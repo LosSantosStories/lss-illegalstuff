@@ -1,7 +1,5 @@
 Config = {}
 
-Config.Core = 'ESX' --ESX OR QBox
-
 Config.SettingsLockpick =  {
     Item = 'lockpick', --Item name
     Duration = 15000, --Duration the progress
