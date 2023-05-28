@@ -1,8 +1,4 @@
 lib.locale()
-local Job = nil
-if Config.Core == 'Qbox' then
-    local Qbox = exports['qbx-core']:GetCoreObject()
-end
 --IF YOU DONT KNOW WHAT ARE YOU DOING JUST DONT TOUCH ANYTHING :)
 
 function LockpickVehicle(entity)
@@ -32,6 +28,9 @@ function LockpickVehicle(entity)
             type = 'inform'
         })
         if IsPedAPlayer(Driver) then return end
+        SetVehicleDoorsLocked(entity, 1)
+        TriggerServerEvent('lss-illegalpack:server:RemoveLockPick')
+        
         local Seats = GetVehicleModelNumberOfSeats(GetEntityModel(entity))
         
         for i = -1, Seats do
@@ -42,8 +41,6 @@ function LockpickVehicle(entity)
                 TaskSmartFleePed(NPC, cache.ped, 1000.0, -1, false, false)
             end
         end
-        TriggerServerEvent('lss-illegalpack:server:RemoveLockPick')
-        SetVehicleDoorsLocked(entity, 1)
     else         
         lib.notify({
             title = locale('notification_title'),
@@ -76,14 +73,10 @@ local function SetTarget()
             end,
             label = locale('target_lockpick'),
             canInteract = function(entity)
-                if Config.Core == 'ESX' then
-                    Job = ESX.PlayerData.job.name
-                else
-                    Job = Qbox.Functions.GetPlayerData().job.name
-                end
+                local Job = ESX.PlayerData.job.name
+
                 for k,v in pairs(Config.BlacklistedJobs) do
                     if Job == v then
-                        
                         return false
                     end
                 end
