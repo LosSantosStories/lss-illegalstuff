@@ -1,6 +1,4 @@
 
---IF YOU DONT KNOW WHAT ARE YOU DOING JUST DONT TOUCH ANYTHING :)
-
 RegisterNetEvent('lss-illegalstuff:client:HotWiring', function ()
     if cache.vehicle == false or cache.seat ~= -1 or GetIsVehicleEngineRunning(cache.vehicle) == 1 then return end
     local Networked = NetworkGetNetworkIdFromEntity(cache.vehicle)

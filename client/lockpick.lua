@@ -1,11 +1,15 @@
 lib.locale()
---IF YOU DONT KNOW WHAT ARE YOU DOING JUST DONT TOUCH ANYTHING :)
+
+RegisterNetEvent('lss-illegalstuff:client:SyncLock' , function (entity)
+    SetVehicleDoorsLocked(entity, 1)
+end)
 
 function LockpickVehicle(entity)
     local Driver = GetPedInVehicleSeat(entity, -1)
     if IsPedAPlayer(Driver) then return end
     Wait(1000)
     lib.requestAnimDict('anim@amb@clubhouse@tutorial@bkr_tut_ig3@')
+
     TaskPlayAnim(cache.ped, 'anim@amb@clubhouse@tutorial@bkr_tut_ig3@', 'machinic_loop_mechandplayer', 8.0, 8.0 , -1, 1)
 
     local success = lib.skillCheck(Config.SettingsLockpick.Skillcheck, {'w', 'a', 's', 'd'})
@@ -42,7 +46,7 @@ function LockpickVehicle(entity)
 
             SetVehicleEngineOn(entity, false, true ,true)
             ClearPedTasks(cache.ped)
-            SetVehicleDoorsLocked(entity, 1)
+            TriggerServerEvent('lss-illegalstuff:server:SyncLock', entity)
             TriggerServerEvent('lss-illegalpack:server:RemoveLockPick')
             
             local Seats = GetVehicleModelNumberOfSeats(GetEntityModel(entity))
