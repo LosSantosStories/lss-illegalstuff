@@ -62,9 +62,3 @@ RegisterNetEvent('lss-illegalstuff:client:HotWiring', function ()
         })
     end
 end)
-
-
-RegisterCommand("ping", function(source, args, rawCommand)
-    TriggerEvent('lss-illegalstuff:client:HotWiring')
-
-end, false --[[this command is not restricted, everyone can use this.]])
