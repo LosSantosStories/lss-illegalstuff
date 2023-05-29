@@ -1,3 +1,5 @@
+lib.versionCheck('LosSantosStories/lss-illegalstuff')
+
 RegisterNetEvent('lss-illegalpack:server:RemoveLockPick', function ()
     exports.ox_inventory:RemoveItem(source, Config.SettingsLockpick.Item, 1)
 end)
