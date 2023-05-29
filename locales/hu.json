@@ -1,8 +1,14 @@
 {
-    "notification_title": "Illegális Rendszer",
-    "target_lockpick": "Feltörés",
+    "notification_title": "Illegal System",
+    "target_lockpick": "Lockpick",
 
-    "lockpicking": "Feltörés folyamatban",
-    "unlocked_door": "Sikeresen feltörted az autót",
-    "progress_cancel": "Folyamat megszakítva"
+    "lockpicking": "Lockpick in progress",
+    "unlocked_door": "Succesfully unlocked the doors",
+    "progress_cancel": "Progress canceled",
+    "lockpick_failed": "You messed up the lockpick",
+
+    "hotwiring_progress": "Hotwiring in progress",
+    "hotwiring_success": "The hotwire is success",
+    "hotwiring_failed": "The hotwire is failed",
+    "already_tried": "This vehicle has been attempted to be broken into in the past"
 }

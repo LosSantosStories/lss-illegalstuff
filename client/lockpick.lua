@@ -4,51 +4,76 @@ lib.locale()
 function LockpickVehicle(entity)
     local Driver = GetPedInVehicleSeat(entity, -1)
     if IsPedAPlayer(Driver) then return end
+    Wait(1000)
+    lib.requestAnimDict('anim@amb@clubhouse@tutorial@bkr_tut_ig3@')
+    TaskPlayAnim(cache.ped, 'anim@amb@clubhouse@tutorial@bkr_tut_ig3@', 'machinic_loop_mechandplayer', 8.0, 8.0 , -1, 1)
 
-    if lib.progressCircle({
-        duration = 15000,
-        label = locale('lockpicking'),
-        position = Config.SettingsLockpick.duration,
-        useWhileDead = false,
-        canCancel = true,
-        disable = {
-            combat = true,
-            move = true,
-            car = true,
-        },
-        anim = {
-            dict = 'anim@amb@clubhouse@tutorial@bkr_tut_ig3@',
-            clip = 'machinic_loop_mechandplayer'
-        },
-    }) 
-    then
+    local success = lib.skillCheck(Config.SettingsLockpick.Skillcheck, {'w', 'a', 's', 'd'})
+
+    if success then
+        if lib.progressCircle({
+            duration = Config.SettingsLockpick.Duration,
+            label = locale('lockpicking'),
+            position = 'bottom',
+            useWhileDead = false,
+            canCancel = true,
+            disable = {
+                combat = true,
+                move = true,
+                car = true,
+            },
+            anim = {
+                dict = 'anim@amb@clubhouse@tutorial@bkr_tut_ig3@',
+                clip = 'machinic_loop_mechandplayer',
+                flag = 16
+            },
+        }) 
+        then
+            lib.notify({
+                title = locale('notification_title'),
+                description = locale('unlocked_door'),
+                type = 'inform'
+            })
+            if IsPedAPlayer(Driver) then return end
+            while NetworkGetEntityOwner(entity) ~= PlayerId() do
+                NetworkRequestControlOfEntity(entity)
+                Wait(10)
+            end
+
+            SetVehicleEngineOn(entity, false, true ,true)
+            ClearPedTasks(cache.ped)
+            SetVehicleDoorsLocked(entity, 1)
+            TriggerServerEvent('lss-illegalpack:server:RemoveLockPick')
+            
+            local Seats = GetVehicleModelNumberOfSeats(GetEntityModel(entity))
+            for i = -1, Seats do
+                if not IsVehicleSeatFree(entity, i) then
+                    local NPC = GetPedInVehicleSeat(entity, i)
+                    TaskLeaveVehicle(NPC, entity, 0)
+                    Wait(1500)
+                    TaskSmartFleePed(NPC, cache.ped, 1000.0, -1, false, false)
+                end
+            end
+        else         
+            lib.notify({
+                title = locale('notification_title'),
+                description = locale('progress_cancel'),
+                type = 'error'
+            })
+            ClearPedTasks(cache.ped)
+        end
+        FreezeEntityPosition(entity, false)
+    else
         lib.notify({
             title = locale('notification_title'),
-            description = locale('unlocked_door'),
+            description = locale('lockpick_failed'),
             type = 'inform'
         })
-        if IsPedAPlayer(Driver) then return end
-        SetVehicleDoorsLocked(entity, 1)
         TriggerServerEvent('lss-illegalpack:server:RemoveLockPick')
-        
-        local Seats = GetVehicleModelNumberOfSeats(GetEntityModel(entity))
-        
-        for i = -1, Seats do
-            if not IsVehicleSeatFree(entity, i) then
-                local NPC = GetPedInVehicleSeat(entity, i)
-                TaskLeaveVehicle(NPC, entity, 0)
-                Wait(1500)
-                TaskSmartFleePed(NPC, cache.ped, 1000.0, -1, false, false)
-            end
-        end
-    else         
-        lib.notify({
-            title = locale('notification_title'),
-            description = locale('progress_cancel'),
-            type = 'error'
-        }) 
+        ClearPedTasks(cache.ped)
+        FreezeEntityPosition(cache.ped, false)
+        FreezeEntityPosition(entity, false)
     end
-    FreezeEntityPosition(entity, false)
 end
 
 local function SetTarget()
